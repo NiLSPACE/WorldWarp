@@ -50,12 +50,51 @@ function HandleWWarpCommand(a_Split, a_Player)
 		return true
 	end
 	
+	-- Set the last coordinates to the current one
+	g_LastPlayerPositions[a_Player:GetName()] = {WorldName = a_Player:GetWorld():GetName(), PosX = a_Player:GetPosX(), PosY = a_Player:GetPosY(), PosZ = a_Player:GetPosZ()}
+	
 	-- Move the player to the world and teleport to the spawn coordinates
 	a_Player:MoveToWorld(WorldName)
 	a_Player:TeleportToCoords(DstWorld:GetSpawnX(), DstWorld:GetSpawnY(), DstWorld:GetSpawnZ())
 	
 	-- Send a welcome message to the player.
 	a_Player:SendMessage(cChatColor.Red .. "[WorldWarp]: " .. cChatColor.Green .. "Welcome to " .. WorldName)
+	return true
+end
+
+
+
+
+
+-- Sends the player back to the previous coordinates
+function HandleWBackCommand(a_Split, a_Player)
+	-- /wback
+	
+	local PlayerName = a_Player:GetName()
+	
+	-- Check if the player has position data. If not send a message end bail out.
+	if (g_LastPlayerPositions[PlayerName] == nil) then
+		a_Player:SendMessage(cChatColor.Red .. "[WorldWarp]: We don't have any data of previous teleports.")
+		return true
+	end
+	
+	-- Check if the previous world still exists.
+	local DstWorld = cRoot:Get():GetWorld(g_LastPlayerPositions[PlayerName].WorldName)
+	if (DstWorld == nil) then
+		a_Player:SendMessage(cChatColor.Red .. "[WorldWarp]: That world does not exist anymore o_O")
+		return true
+	end
+	
+	-- Save the previous last coordinates and save the current ones
+	local LastCoordinates = g_LastPlayerPositions[PlayerName]
+	g_LastPlayerPositions[PlayerName] = {WorldName = a_Player:GetWorld():GetName(), PosX = a_Player:GetPosX(), PosY = a_Player:GetPosY(), PosZ = a_Player:GetPosZ()}
+	
+	-- Teleport to the latest world and coordinates
+	a_Player:MoveToWorld(LastCoordinates.WorldName)
+	a_Player:TeleportToCoords(LastCoordinates.PosX, LastCoordinates.PosY, LastCoordinates.PosZ)
+	
+	-- Send a welcome message
+	a_Player:SendMessage(cChatColor.Red .. "[WorldWarp]: " .. cChatColor.Green .. "Welcome to " .. DstWorld:GetName())
 	return true
 end
 

@@ -26,6 +26,13 @@ g_PluginInfo =
 			Permission = "WorldWarp.wwarp",
 			Handler    = HandleWWarpCommand,
 			HelpString = "Warps to desired world.",
-		}
+		},
+		
+		["/wback"] =
+		{
+			Permission = "WorldWarp.wback",
+			Handler    = HandleWBackCommand,
+			HelpString = "Returns to previous world.",
+		},
 	},
 }
