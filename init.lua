@@ -1,6 +1,6 @@
 
 g_Plugin = nil
-
+g_LastPlayerPositions = {}
 
 
 
@@ -17,8 +17,11 @@ function Initialize(a_Plugin)
 	
 	g_Plugin = a_Plugin
 	
+	-- Load the InfoReg shared library:
+	dofile(cPluginManager:GetPluginsPath() .. "/InfoReg.lua")
+	
 	-- Bind the commands
-	cPluginManager:BindCommand("/wlist", "WorldWarp.wlist", HandleWListCommand, "Lists active worlds.")
+	RegisterPluginInfoCommands()
 	
 	-- Say we finished loading.
 	LOG("[WorldWarp] Enabled! Running " .. g_Plugin:GetVersion())
