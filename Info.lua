@@ -34,5 +34,12 @@ g_PluginInfo =
 			Handler    = HandleWBackCommand,
 			HelpString = "Returns to previous world.",
 		},
+		
+		["/wcreate"] =
+		{
+			Permission = "WorldWarp.wcreate",
+			Handler    = HandleWCreateCommand,
+			HelpString = "Creates world",
+		},
 	},
 }
