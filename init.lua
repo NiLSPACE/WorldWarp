@@ -1,6 +1,7 @@
 
 g_Plugin = nil
 g_LastPlayerPositions = {}
+g_WorldsGenerating = {} -- Needed for sending a finish message to the player when a world has finished generating the world.
 
 
 
@@ -23,6 +24,9 @@ function Initialize(a_Plugin)
 	
 	-- Bind the commands
 	RegisterPluginInfoCommands()
+	
+	-- Register the OnWorldStarted hook. Needed for sending a Finished generating world message to the player.
+	cPluginManager:AddHook(cPluginManager.HOOK_WORLD_STARTED, OnWorldStarted)
 	
 	-- Say we finished loading.
 	LOG("[WorldWarp] Enabled! Running " .. g_Plugin:GetVersion())

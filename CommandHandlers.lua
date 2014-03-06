@@ -181,13 +181,13 @@ function HandleWCreateCommand(a_Split, a_Player)
 	end
 	
 	-- Remove the command, the worldname and the environment from the flags. We check if a seed is given later on.
-	local Flags = a_Split
-	for I=3, 1, -1 do
-		table.remove(Flags, I)
+	local Flags = {}
+	for I=3, #a_Split do
+		table.insert(Flags, a_Split[I])
 	end
 	
 	-- Set the seed if given. Also remove it from the arguments
-	if (tonumber(a_Split[4]) ~= nil then
+	if (tonumber(a_Split[4]) ~= nil) then
 		table.insert(WorldIniChanges, {Key = "Seed", ValueName = "Seed", Value = a_Split[4]})
 		table.remove(Flags, 1)
 	end
@@ -217,6 +217,9 @@ function HandleWCreateCommand(a_Split, a_Player)
 	
 	-- Send a message to the player that we're going to initialize the world and generate the chunks.
 	a_Player:SendMessage(cChatColor.Red .. "[WorldWarp]: " .. cChatColor.Green .. "Generating world: " .. a_Split[2])
+	
+	-- We want to send the player a message when the world finishes generating.
+	g_WorldsGenerating[a_Split[2]] = a_Player:GetName()
 	
 	-- And finaly generate the world.
 	cRoot:Get():CreateAndInitializeWorld(a_Split[2])

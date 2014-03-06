@@ -5,7 +5,17 @@ This plugin allows people to easily create, import, and move between worlds.  	L
 ### General
 | Command | Permission | Description | 
 | ------- | ---------- | ----------- | 
+|/wback | WorldWarp.wback | Returns to previous world.| 
+|/wcreate | WorldWarp.wcreate | Creates world| 
 |/wlist | WorldWarp.wlist | Lists active worlds.| 
 |/wwarp | WorldWarp.wwarp | Warps to desired world.| 
 
 
+
+# Permissions
+| Permissions | Description | Commands | Recommended groups |
+| ----------- | ----------- | -------- | ------------------ |
+WorldWarp.wback |  | `/wback` | 
+WorldWarp.wcreate |  | `/wcreate` | 
+WorldWarp.wlist |  | `/wlist` | 
+WorldWarp.wwarp |  | `/wwarp` | 
